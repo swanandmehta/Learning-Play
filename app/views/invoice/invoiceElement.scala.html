@@ -1,0 +1,53 @@
+@(invoice : dto.InvoiceDto)
+@import helper._
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Invoice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" media="screen" href='@routes.Assets.versioned("stylesheets/main.css")'>
+</head>
+<body class="container-fluid p-0 m-0">
+@nav()
+<div class="row justify-content-center p-0 m-0">
+    <div class="col-4 p-0 m-0">
+        @helper.form(action = routes.InvoiceController.save()){
+        <div class="col-12 p-0 m-0">
+            <button type="submit" class="btn btn-primary float-right my-2">
+                Save
+            </button>
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" id="id" value="@invoice.getId()"/>
+
+            <input type="number" name="value" id="value" class="form-control"
+                   placeholder="Value" value="@invoice.getValue()">
+        </div>
+        <div class="form-group">
+            <input type="number" name="clientId" id="clientId" class="form-control"
+                   placeholder="Client-Id" value="@invoice.getClientId()">
+        </div>
+        <div class="form-group">
+            <input type="number" name="number" id="number" class="form-control"
+                   placeholder="Number" value="@invoice.getNumber()">
+        </div>
+        <div class="form-group">
+            <select class="form-control" id="status" name="status">
+                @if(invoice.getStatus() == null){
+                    <option disabled selected>Please select status</option>
+                }else {
+                    <option value="@invoice.getId()" selected>@invoice.getStatusValue()</option>
+                }
+                @for(option <- invoice.getOptions()){
+                    <option value="@option.getId()">@option.getStatus()</option>
+                }
+            </select>
+        </div>
+        }
+    </div>
+</div>
+@scriptContainer()
+</body>
+</html>

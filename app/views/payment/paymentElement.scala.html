@@ -1,0 +1,57 @@
+@(payment : dto.PaymentDto)
+@import helper._
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>payment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" media="screen" href='@routes.Assets.versioned("stylesheets/main.css")'>
+</head>
+<body class="container-fluid p-0 m-0">
+@nav()
+<div class="row justify-content-center p-0 m-0">
+    <div class="col-4 p-0 m-0">
+        @helper.form(action = routes.PaymentController.save()){
+        <div class="col-12 p-0 m-0">
+            <button type="submit" class="btn btn-primary float-right my-2">
+                Save
+            </button>
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" id="id" value="@payment.getId()"/>
+
+            <input type="number" name="value" id="value" class="form-control"
+                   placeholder="Value" value="@payment.getValue()">
+        </div>
+        <div class="form-group">
+            <select class="form-control" id="invoiceId" name="invoiceId">
+                @if(payment.getInvoiceId() == null){
+                <option disabled selected>Please select invoice</option>
+                }else {
+                <option value="@payment.getInvoiceId()" selected>@payment.getInvoiceId()</option>
+                }
+                @for(option <- payment.getInvoiceList()){
+                <option value="@option">@option</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" id="methodId" name="methodId">
+                @if(payment.getMethodId() == null){
+                    <option disabled selected>Please select payment method</option>
+                }else {
+                    <option value="@payment.getMethodId()" selected>@payment.getMethodValue()</option>
+                }
+                @for(option <- payment.getPaymentMethods()){
+                    <option value="@option.getId()">@option.getValue()</option>
+                }
+            </select>
+        </div>
+        }
+    </div>
+</div>
+@scriptContainer()
+</body>
+</html>

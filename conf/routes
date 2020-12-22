@@ -1,0 +1,20 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.load()
+GET     /filter                     controllers.HomeController.filter(request: play.mvc.Http.Request)
+
+GET     /invoice                    controllers.InvoiceController.load()
+GET     /invoice/create             controllers.InvoiceController.create()
+POST    /invoice/save               controllers.InvoiceController.save(request: play.mvc.Http.Request)
+GET     /invoice/:id                controllers.InvoiceController.getById(id: Integer)
+
+GET     /payment                    controllers.PaymentController.load
+GET     /payment/create             controllers.PaymentController.create()
+POST    /payment/save               controllers.PaymentController.save(request: play.mvc.Http.Request)
+GET     /payment/:id                controllers.PaymentController.getById(id: Integer)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
